@@ -1,34 +1,59 @@
 
-import { useEffect } from "react";
 import { useState } from "react";
+import data from "../helpers/data";
 import { TiPlusOutline } from "react-icons/ti";
 import { TiMinus } from "react-icons/ti";
 
-const AccordionList = ({ id,question, info }) => {
+const AccordionList = () => {
+   
 const [show, setShow] = useState(false);
-const [göster, setGöster]=useState(false)
 
+console.log(data)
 
-const handleclick = () => {
-  setShow(!show);
-  setGöster(!göster)
-    
-}
+const toggle = (index) => {
+    if (show=== index){
+        return setShow(null)
+    }
 
-
-
-  return (
-    <div className="sorulistesi">
-      <header>
-        <h4>{question}</h4>
-        <button className="btn" onClick={handleclick}>
-          {show ? <TiMinus fontSize={15} /> : <TiPlusOutline fontSize={15} />}
-        </button>
-      </header>
-      {show && <p >{info}</p>}
-    </div>
-  );
+    setShow(index)
+    console.log(index);
 };
+
+ 
+  return (
+    <div className="container">
+    {data.map((item, index) => {
+    const { question, info } = item;
+        return (
+            <div key={index}>
+      <header className="başlık">
+        <div className="title">
+          
+          <h4>{question}</h4>
+          
+            <button className="btn " onClick={() => toggle(index)}>
+              {show === index ? (
+                <TiMinus fontSize={15} />
+              ) : (
+                <TiPlusOutline fontSize={15} />
+              )}
+            </button>
+         
+        </div>
+      </header>
+      {show === index ? <p className="info">{info}</p> : null}
+    </div>
+
+        )
+              }
+    
+  )
+              }
+              
+
+     </div> 
+
+)};
 
 export default AccordionList;
 
